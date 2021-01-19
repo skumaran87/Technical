@@ -21,12 +21,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@master 
-        
-      - name: checkoutmerge
-        uses: skumaran87/Technical@master
-        with:
-          type: now
-          from_branch: POC_Kumar_Revert
-          target_branch: POC_Kumar
-          github_token: ${{ github.AUTO_TOKEN }}
+      - name: merge branches
+        run: |
+           curl -X POST \
+           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+           -H "Accept: application/vnd.github.v3+json" \
+           https://api.github.com/repos/skumaran87/Technical/merges \
+           -d '{"base":"POC_Kumar","head":"POC_Kumar_Revert"}'
+
